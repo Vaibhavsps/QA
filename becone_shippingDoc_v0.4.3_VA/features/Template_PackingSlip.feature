@@ -1,7 +1,7 @@
 Feature: Test template-packing slip file
 
   Background: set pre-requisite
-    Given set base url to "http://localhost/templates/v1/packing-slip/template"
+    Given set base url to "https://api.template.spsapps.net/templates/v1/lables/template"
     #https://api.template.spsapps.net/templates/v1/lables/template"
 
 @done
@@ -11,7 +11,7 @@ Feature: Test template-packing slip file
     And the response status message should equal to "OK"
 
   @done @riya_m @abcdefgh
-  Scenario: test that URl "/" returns only finite results
+  Scenario: test that URl "/" returns only finite result
     When we do "GET" request to URL "/"
     Then the output should contain "atmax" "10" record in "templates"
 

@@ -1,0 +1,125 @@
+Feature: Test template-packing slip file # features/Template_PackingSlip.feature:1
+
+  Background: set pre-requisite  # features/Template_PackingSlip.feature:3
+
+  @done
+  Scenario: Test scenario to check for availability of service                          # features/Template_PackingSlip.feature:8
+    Given load "JSON" test data for "zpl" service                                       # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template" # None
+    When we do "GET" request to URL "/"                                                 # None
+    Then the response status code should be equal to 200                                # None
+    And the response status message should equal to "OK"                                # None
+
+  @done
+  Scenario: test that URl "/" returns only finite results                               # features/Template_PackingSlip.feature:13
+    Given load "JSON" test data for "zpl" service                                       # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template" # None
+    When we do "GET" request to URL "/"                                                 # None
+    Then the response should contain "templates" array of "21" records                  # None
+
+  @done
+  Scenario: Test for retrieving data for a template "6ffd0165"                          # features/Template_PackingSlip.feature:18
+    Given load "JSON" test data for "zpl" service                                       # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template" # None
+    When we do "GET" request to URL "/6ffd0165"                                         # None
+    Then the "description" should be "Packing slip"                                     # None
+    And the "name" should be "Wayfair LLC"                                              # None
+    And the "owner_name" should be "Wayfair LLC"                                        # None
+    And the "type" should be "packing-slip"                                             # None
+    And the output should contain "atleast" "2" record in "versions"                    # None
+
+  @done
+  Scenario Outline: Test for retrieving data for a template "6ffd0165" -- @1.1          # features/Template_PackingSlip.feature:35
+    Given load "JSON" test data for "zpl" service                                       # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template" # None
+    When we do "GET" request to URL "/6ffd0165"                                         # None
+    Then the "description" should be "Packing slip"                                     # None
+    And the "name" should be "Wayfair LLC"                                              # None
+    And the "owner_name" should be "Wayfair LLC"                                        # None
+    And the "type" should be "packing-slip"                                             # None
+
+  @done
+  Scenario Outline: Test for retrieving data for a template "6ffd0165" -- @1.2                               # features/Template_PackingSlip.feature:36
+    Given load "JSON" test data for "zpl" service                                                            # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template"                      # None
+    When we do "GET" request to URL "/72876c16"                                                              # None
+    Then the "description" should be "I am Jacks template, I represent a pattern for which Jack describes X" # None
+    And the "name" should be "Now with more formats 2"                                                       # None
+    And the "owner_name" should be "SPS Commerece"                                                           # None
+    And the "type" should be "packing-slip"                                                                  # None
+
+  @done
+  Scenario: Test scenario to check data of all templates in output                      # features/Template_PackingSlip.feature:39
+    Given load "JSON" test data for "zpl" service                                       # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template" # None
+    When we do "GET" request to URL "/"                                                 # None
+    Then the response status message should equal to "OK"                               # None
+    And all the template results should contain "tag"                                   # None
+      | tag         |
+      | description |
+      | id          |
+      | name        |
+      | owner_id    |
+      | owner_name  |
+      | type        |
+
+  @done @smoke @fullregression
+  Scenario Outline: Test scenario to get template using template id and version -- @1.1   # features/Template_PackingSlip.feature:74
+    Given load "JSON" test data for "zpl" service                                         # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template"   # None
+    When we do "GET" request to URL "/6ffd0165/version/1"                                 # None
+    Then the response status message should equal to "OK"                                 # None
+    And the response status code should be equal to 200                                   # None
+    And the output should contain "tag"                                                   # None
+      | tag             |
+      | created_at      |
+      | description     |
+      | id              |
+      | name            |
+      | owner_id        |
+      | owner_name      |
+      | status          |
+      | tags            |
+      | template_data   |
+      | template_schema |
+    And the "template_data" should be "#DR#.template_data_6ffd0165_1"                     # None
+    And the "template_schema" should be "#DR#.template_schema_6ffd0165_1"                 # None
+
+  @negative @done
+  Scenario Outline: Test scenario to get template by invalid template id -- @1.1        # features/Template_PackingSlip.feature:88
+    Given load "JSON" test data for "zpl" service                                       # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template" # None
+    When we do "GET" request to URL "/34324"                                            # None
+    Then the response status message should equal to "NOT FOUND"                        # None
+    And the "error.error_description" should be "Template not found"                    # None
+    And the "status" should be "error"                                                  # None
+
+  @negative @done
+  Scenario Outline: Test scenario to get template by invalid template id -- @1.2        # features/Template_PackingSlip.feature:89
+    Given load "JSON" test data for "zpl" service                                       # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template" # None
+    When we do "GET" request to URL "/46485"                                            # None
+    Then the response status message should equal to "NOT FOUND"                        # None
+    And the "error.error_description" should be "Template not found"                    # None
+    And the "status" should be "error"                                                  # None
+
+  @negative @not_started
+  Scenario: Test scenario to get template by Template ID along with an invalid version             # features/Template_PackingSlip.feature:93
+    Given load "JSON" test data for "zpl" service                                                  # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template"            # None
+    When we do "GET" request to URL "/{template_id}/version/{version}"                             # None
+    Then the response status code should be equal to "error"                                       # None
+    And the Expected output should contain Error Description equal to "Template version not found" # None
+      | template_id | version |
+      | 6ffd0165    | 5       |
+
+  @negative @not_started
+  Scenario: Test scenario to get template by invalid Template ID and invalid version as well  # features/Template_PackingSlip.feature:101
+    Given load "JSON" test data for "zpl" service                                             # None
+    And set base url to "https://api.template.spsapps.net/templates/v1/lables/template"       # None
+    When we do "GET" request to URL "/{template_id}/version/{version}"                        # None
+    Then the response status message should equal to "NOT FOUND"                              # None
+    And the Expected output should contain Error Description equal to "Template not found"    # None
+      | template_id | version |
+      | 5332        | 5       |
+

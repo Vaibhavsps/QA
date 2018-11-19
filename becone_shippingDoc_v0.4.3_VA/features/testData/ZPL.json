@@ -1,0 +1,43 @@
+{
+    "ShippingLabels": [
+        {
+            "ShippingLabel": {
+                "Header": {
+                    "LabelHeader": {
+                        "BillOfLadingNumber": "12345679",
+                        "Vendor": "007261415"
+                    },
+                    "ShipFromAddress": {
+                        "Address1": "1070 WINDHAM PARKWAY",
+                        "Address2": "Suite A",
+                        "AddressName": "Vendor,Inc",
+                        "City": "INDIANAPOLIS",
+                        "PostalCode": "46219",
+                        "State": "IN"
+                    },
+                    "ShipToAddress": {
+                        "Address1": "1070 WINDHAM PARKWAY",
+                        "Address2": "Suite A",
+                        "AddressName": "Retailer,Inc",
+                        "City": "INDIANAPOLIS",
+                        "PostalCode": "46219",
+                        "State": "IN"
+                    }
+                },
+                "Order": {
+                    "Item": {
+                        "ProductDescription": "FRAGILE"
+                    },
+                    "OrderHeader": {
+                        "Department": "028",
+                        "PurchaseOrderNumber": "8217340"
+                    },
+                    "UCCAndOrEANBarcodeItem": {
+                        "SerialShippingContainerCode": "000521775138957172"
+                    }
+                }
+            },
+            "zplTemplate":"^XA\n^MCY\n^XZ\n^XA\n^FWN^CFD,24^PW812^LH0,0\n^CI0^MNY^MTT^MMT^MD0^PON^PMN^LRN\n^XZ\n^XA\n^DFR:TEMP_FMT.ZPL\n^LRN\n^XZ\n^XA\n^XFR:TEMP_FMT.ZPL\n^FO0,199^GB813,4,4,B,0^FS\n^FO0,407^GB813,4,4,B,0^FS\n^FO0,740^GB813,4,4,B,0^FS\n^FO0,819^GB813,4,4,B,0^FS\n^FO398,0^GB4,203,4,B,0^FS\n^FO420,199^GB4,212,4,B,0^FS\n^A0N,28,28^FO20,30^FDShip From:^FS\n^FB400,8,,\n^A0N,23,23^FO20,60^FD{{mandatory=true, location=Header/ShipFromAddress/AddressName}} \\& {{mandatory=true, location=Header/ShipFromAddress/Address1}} \\& {{mandatory=false, location=Header/ShipFromAddress/Address2}} \\& {{mandatory=true, location=Header/ShipFromAddress/City}}, {{mandatory=true, location=Header/ShipFromAddress/State}},{{mandatory=true, location=Header/ShipFromAddress/PostalCode}}^FS\n^A0N,28,28^FO420,30^FDShip To:^FS\n^FB410,8,,\n^A0N,23,23^FO420,60^FD{{mandatory=true, location=Header/ShipToAddress/AddressName}} \\& {{mandatory=true, location=Header/ShipToAddress/Address1}} \\& {{mandatory=false, location=Header/ShipToAddress/Address2}} \\& {{mandatory=true, location=Header/ShipToAddress/City}}, {{mandatory=true, location=Header/ShipToAddress/State}}, {{mandatory=true, location=Header/ShipToAddress/PostalCode}}^FS\n^A0N,23,24^FO20,205^FDShip To Postal Code^FS\n^A0N,23,24^FO120,345^FD(420) {{mandatory=true, location=Header/ShipToAddress/PostalCode}}^FS\n^BY3^FO40,230^BCN,110,N,N,N^FD>;>8 420{{mandatory=true, location=Header/ShipToAddress/PostalCode}}^FS\n^A0N,28,28^FO440,230^FDB/L Number:^FS\n^A0N,28,28^FO440,260^FD{{mandatory=true, location=Header/LabelHeader/BillOfLadingNumber}}^FS\n^A0N,28,28^FO440,305^FDPO Number:^FS\n^A0N,28,28^FO440,335^FD{{mandatory=true, location=Order/OrderHeader/PurchaseOrderNumber}}^FS\n^A0N,80,80^FO20,445^FDDept: {{mandatory=true, location=Order/OrderHeader/Department}}^FS\n^A0N,35,35^FO20,530^FDItem Number: {{mandatory=true, location=Header/LabelHeader/Vendor}}^FS\n^A0N,28,28^FO20,750^FDDescription: {{mandatory=true, location=Order/Item/ProductDescription}}^FS\n^A0N,20,20^FO20,825^FD(00) Serialized Shipping Container Barcode^FS\n^BY4^FO80,890^BCN,320,N,N,N^FD>;>8 00{{mandatory=true, location=Order/UCCAndOrEANBarcodeItem/SerialShippingContainerCode}}^FS\n^A0N,28,28^FO250,860^FD{{mandatory=true, location=Order/UCCAndOrEANBarcodeItem/SerialShippingContainerCode, format=(00) %s %s%s%s%s%s%s%s %s%s%s%s%s%s%s%s%s %s}}^FS\n^PQ1,0,1,Y\n^XZ\n^XA\n^IDR:TEMP_FMT.ZPL\n^XZ"
+        }
+    ]
+}
